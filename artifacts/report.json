@@ -1,0 +1,1050 @@
+{
+  "run_id": "9819ee34bb347021",
+  "manifest": {
+    "version": "1.0.0",
+    "input_sha256": {
+      "bank": "9326a80ef20c779de15edef8ae43ba8179b9c0ac9af83bf83df1df876e964002",
+      "invoices": "dc648149327dae84c8e7abc6ea42d5b29f7384e249fe999c26e6b1a4c9034d59",
+      "journal": "b909130d78ec6e72a4135962c2e3beaa41acc9641611ba528788191e2cf00bad"
+    },
+    "policy": {
+      "days": 45,
+      "tolerance_minor_units": 1
+    }
+  },
+  "counts": {
+    "bank": 53,
+    "invoices": 53,
+    "journal": 105
+  },
+  "groups": [
+    {
+      "id": "R0001",
+      "bank_ids": [
+        "B001"
+      ],
+      "invoice_ids": [
+        "INV-001"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 112500,
+      "invoice_amount": 112500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-001",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0002",
+      "bank_ids": [
+        "B002"
+      ],
+      "invoice_ids": [
+        "INV-002"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 125000,
+      "invoice_amount": 125000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-002",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0003",
+      "bank_ids": [
+        "B003"
+      ],
+      "invoice_ids": [
+        "INV-003"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 137500,
+      "invoice_amount": 137500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-003",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0004",
+      "bank_ids": [
+        "B004"
+      ],
+      "invoice_ids": [
+        "INV-004"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 150000,
+      "invoice_amount": 150000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-004",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0005",
+      "bank_ids": [
+        "B005"
+      ],
+      "invoice_ids": [
+        "INV-005"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 162500,
+      "invoice_amount": 162500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-005",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0006",
+      "bank_ids": [
+        "B006"
+      ],
+      "invoice_ids": [
+        "INV-006"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 175000,
+      "invoice_amount": 175000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-006",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0007",
+      "bank_ids": [
+        "B007"
+      ],
+      "invoice_ids": [
+        "INV-007"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 187500,
+      "invoice_amount": 187500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-007",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0008",
+      "bank_ids": [
+        "B008"
+      ],
+      "invoice_ids": [
+        "INV-008"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 200000,
+      "invoice_amount": 200000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-008",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0009",
+      "bank_ids": [
+        "B009"
+      ],
+      "invoice_ids": [
+        "INV-009"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 212500,
+      "invoice_amount": 212500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-009",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0010",
+      "bank_ids": [
+        "B010"
+      ],
+      "invoice_ids": [
+        "INV-010"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 225000,
+      "invoice_amount": 225000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-010",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0011",
+      "bank_ids": [
+        "B011"
+      ],
+      "invoice_ids": [
+        "INV-011"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 237500,
+      "invoice_amount": 237500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-011",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0012",
+      "bank_ids": [
+        "B012"
+      ],
+      "invoice_ids": [
+        "INV-012"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 250000,
+      "invoice_amount": 250000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-012",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0013",
+      "bank_ids": [
+        "B013"
+      ],
+      "invoice_ids": [
+        "INV-013"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 262500,
+      "invoice_amount": 262500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-013",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0014",
+      "bank_ids": [
+        "B014"
+      ],
+      "invoice_ids": [
+        "INV-014"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 275000,
+      "invoice_amount": 275000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-014",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0015",
+      "bank_ids": [
+        "B015"
+      ],
+      "invoice_ids": [
+        "INV-015"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 287500,
+      "invoice_amount": 287500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-015",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0016",
+      "bank_ids": [
+        "B016"
+      ],
+      "invoice_ids": [
+        "INV-016"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 300000,
+      "invoice_amount": 300000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-016",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0017",
+      "bank_ids": [
+        "B017"
+      ],
+      "invoice_ids": [
+        "INV-017"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 312500,
+      "invoice_amount": 312500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-017",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0018",
+      "bank_ids": [
+        "B018"
+      ],
+      "invoice_ids": [
+        "INV-018"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 325000,
+      "invoice_amount": 325000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-018",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0019",
+      "bank_ids": [
+        "B019"
+      ],
+      "invoice_ids": [
+        "INV-019"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 337500,
+      "invoice_amount": 337500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-019",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0020",
+      "bank_ids": [
+        "B020"
+      ],
+      "invoice_ids": [
+        "INV-020"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 350000,
+      "invoice_amount": 350000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-020",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0021",
+      "bank_ids": [
+        "B021"
+      ],
+      "invoice_ids": [
+        "INV-021"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 362500,
+      "invoice_amount": 362500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-021",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0022",
+      "bank_ids": [
+        "B022"
+      ],
+      "invoice_ids": [
+        "INV-022"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 375000,
+      "invoice_amount": 375000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-022",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0023",
+      "bank_ids": [
+        "B023"
+      ],
+      "invoice_ids": [
+        "INV-023"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 387500,
+      "invoice_amount": 387500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-023",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0024",
+      "bank_ids": [
+        "B024"
+      ],
+      "invoice_ids": [
+        "INV-024"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 400000,
+      "invoice_amount": 400000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-024",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0025",
+      "bank_ids": [
+        "B025"
+      ],
+      "invoice_ids": [
+        "INV-025"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 412500,
+      "invoice_amount": 412500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-025",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0026",
+      "bank_ids": [
+        "B026"
+      ],
+      "invoice_ids": [
+        "INV-026"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 425000,
+      "invoice_amount": 425000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-026",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0027",
+      "bank_ids": [
+        "B027"
+      ],
+      "invoice_ids": [
+        "INV-027"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 437500,
+      "invoice_amount": 437500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-027",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0028",
+      "bank_ids": [
+        "B028"
+      ],
+      "invoice_ids": [
+        "INV-028"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 450000,
+      "invoice_amount": 450000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-028",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0029",
+      "bank_ids": [
+        "B029"
+      ],
+      "invoice_ids": [
+        "INV-029"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 462500,
+      "invoice_amount": 462500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-029",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0030",
+      "bank_ids": [
+        "B030"
+      ],
+      "invoice_ids": [
+        "INV-030"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 475000,
+      "invoice_amount": 475000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-030",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0031",
+      "bank_ids": [
+        "B031"
+      ],
+      "invoice_ids": [
+        "INV-031"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 487500,
+      "invoice_amount": 487500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-031",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0032",
+      "bank_ids": [
+        "B032"
+      ],
+      "invoice_ids": [
+        "INV-032"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 500000,
+      "invoice_amount": 500000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-032",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0033",
+      "bank_ids": [
+        "B033"
+      ],
+      "invoice_ids": [
+        "INV-033"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 512500,
+      "invoice_amount": 512500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-033",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0034",
+      "bank_ids": [
+        "B034"
+      ],
+      "invoice_ids": [
+        "INV-034"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 525000,
+      "invoice_amount": 525000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-034",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0035",
+      "bank_ids": [
+        "B035"
+      ],
+      "invoice_ids": [
+        "INV-035"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 537500,
+      "invoice_amount": 537500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-035",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0036",
+      "bank_ids": [
+        "B036"
+      ],
+      "invoice_ids": [
+        "INV-036"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 550000,
+      "invoice_amount": 550000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-036",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0037",
+      "bank_ids": [
+        "B037"
+      ],
+      "invoice_ids": [
+        "INV-037"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 562500,
+      "invoice_amount": 562500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-037",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0038",
+      "bank_ids": [
+        "B038"
+      ],
+      "invoice_ids": [
+        "INV-038"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 575000,
+      "invoice_amount": 575000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-038",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0039",
+      "bank_ids": [
+        "B039"
+      ],
+      "invoice_ids": [
+        "INV-039"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 587500,
+      "invoice_amount": 587500,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-039",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0040",
+      "bank_ids": [
+        "B040"
+      ],
+      "invoice_ids": [
+        "INV-040"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 600000,
+      "invoice_amount": 600000,
+      "difference": 0,
+      "flags": [],
+      "party": "INV-040",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0041",
+      "bank_ids": [
+        "B041",
+        "B042"
+      ],
+      "invoice_ids": [
+        "SPLIT"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 1200000,
+      "invoice_amount": 1200000,
+      "difference": 0,
+      "flags": [],
+      "party": "SPLIT",
+      "shape": "2:1"
+    },
+    {
+      "id": "R0042",
+      "bank_ids": [
+        "B043"
+      ],
+      "invoice_ids": [
+        "BATCH-A",
+        "BATCH-B"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": 1000000,
+      "invoice_amount": 1000000,
+      "difference": 0,
+      "flags": [],
+      "party": "BATCH",
+      "shape": "1:2"
+    },
+    {
+      "id": "R0043",
+      "bank_ids": [
+        "B044"
+      ],
+      "invoice_ids": [
+        "FEE"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "REVIEW",
+      "currency": "TRY",
+      "bank_amount": 997500,
+      "invoice_amount": 1000000,
+      "difference": -2500,
+      "flags": [
+        "AMOUNT_DIFFERENCE",
+        "FEE_EXPLAINS_DIFFERENCE"
+      ],
+      "party": "FEE",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0044",
+      "bank_ids": [
+        "B045"
+      ],
+      "invoice_ids": [
+        "PARTIAL"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "REVIEW",
+      "currency": "TRY",
+      "bank_amount": 300000,
+      "invoice_amount": 800000,
+      "difference": -500000,
+      "flags": [
+        "AMOUNT_DIFFERENCE"
+      ],
+      "party": "PARTIAL",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0045",
+      "bank_ids": [
+        "B046",
+        "B047"
+      ],
+      "invoice_ids": [
+        "DUP"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "REVIEW",
+      "currency": "TRY",
+      "bank_amount": 900000,
+      "invoice_amount": 450000,
+      "difference": 450000,
+      "flags": [
+        "AMOUNT_DIFFERENCE",
+        "DUPLICATE_SUSPECT"
+      ],
+      "party": "DUP",
+      "shape": "2:1"
+    },
+    {
+      "id": "R0046",
+      "bank_ids": [
+        "B048"
+      ],
+      "invoice_ids": [
+        "MISSING-GL"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "REVIEW",
+      "currency": "TRY",
+      "bank_amount": 250000,
+      "invoice_amount": 250000,
+      "difference": 0,
+      "flags": [
+        "LEDGER_MISMATCH"
+      ],
+      "party": "MISSING-GL",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0047",
+      "bank_ids": [
+        "B052"
+      ],
+      "invoice_ids": [
+        "OUTFLOW"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "MATCHED",
+      "currency": "TRY",
+      "bank_amount": -210000,
+      "invoice_amount": -210000,
+      "difference": 0,
+      "flags": [],
+      "party": "OUTFLOW",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0048",
+      "bank_ids": [
+        "B053"
+      ],
+      "invoice_ids": [
+        "OVERPAY"
+      ],
+      "rule": "REFERENCE",
+      "score": 100,
+      "status": "REVIEW",
+      "currency": "TRY",
+      "bank_amount": 220000,
+      "invoice_amount": 200000,
+      "difference": 20000,
+      "flags": [
+        "AMOUNT_DIFFERENCE"
+      ],
+      "party": "OVERPAY",
+      "shape": "1:1"
+    },
+    {
+      "id": "R0049",
+      "bank_ids": [
+        "B049"
+      ],
+      "invoice_ids": [
+        "UNREFERENCED"
+      ],
+      "rule": "AMOUNT_DATE_PARTY",
+      "score": 90,
+      "status": "REVIEW",
+      "currency": "TRY",
+      "bank_amount": 375000,
+      "invoice_amount": 375000,
+      "difference": 0,
+      "flags": [
+        "REFERENCE_MISSING"
+      ],
+      "party": "UNREFERENCED",
+      "shape": "1:1"
+    }
+  ],
+  "issues": [
+    {
+      "code": "DUPLICATE_SUSPECT",
+      "source": "bank",
+      "ids": [
+        "B046",
+        "B047"
+      ],
+      "detail": "Same business fields; all members quarantined"
+    },
+    {
+      "code": "LEDGER_MISMATCH",
+      "source": "bank",
+      "ids": [
+        "B048"
+      ],
+      "detail": "BANK lines missing, unbalanced, duplicated, stale, wrong currency or unequal amount"
+    },
+    {
+      "code": "AMBIGUOUS_MATCH",
+      "source": "bank",
+      "ids": [
+        "B050"
+      ],
+      "detail": "2 candidate invoice(s); no allocation made"
+    },
+    {
+      "code": "UNALLOCATED_BANK",
+      "source": "bank",
+      "ids": [
+        "B050"
+      ],
+      "detail": "No unique supported settlement"
+    },
+    {
+      "code": "UNALLOCATED_BANK",
+      "source": "bank",
+      "ids": [
+        "B051"
+      ],
+      "detail": "No unique supported settlement"
+    },
+    {
+      "code": "OPEN_INVOICE",
+      "source": "invoices",
+      "ids": [
+        "AMB-A"
+      ],
+      "detail": "No allocated settlement in this input window"
+    },
+    {
+      "code": "OPEN_INVOICE",
+      "source": "invoices",
+      "ids": [
+        "AMB-B"
+      ],
+      "detail": "No allocated settlement in this input window"
+    },
+    {
+      "code": "OPEN_INVOICE",
+      "source": "invoices",
+      "ids": [
+        "OPEN"
+      ],
+      "detail": "No allocated settlement in this input window"
+    }
+  ],
+  "totals": {
+    "TRY": {
+      "bank_net": 19551500,
+      "invoice_net": 20175000,
+      "matched_gross": 16660000,
+      "unresolved_gross": 3311500
+    }
+  },
+  "summary": {
+    "matched": 43,
+    "review": 6,
+    "issues": 8
+  }
+}

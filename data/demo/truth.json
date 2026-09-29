@@ -1,0 +1,214 @@
+[
+  {
+    "bank_id": "B001",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B002",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B003",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B004",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B005",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B006",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B007",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B008",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B009",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B010",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B011",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B012",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B013",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B014",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B015",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B016",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B017",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B018",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B019",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B020",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B021",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B022",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B023",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B024",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B025",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B026",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B027",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B028",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B029",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B030",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B031",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B032",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B033",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B034",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B035",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B036",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B037",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B038",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B039",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B040",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B041",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B042",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B043",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B044",
+    "expected_status": "REVIEW"
+  },
+  {
+    "bank_id": "B045",
+    "expected_status": "REVIEW"
+  },
+  {
+    "bank_id": "B046",
+    "expected_status": "REVIEW"
+  },
+  {
+    "bank_id": "B047",
+    "expected_status": "REVIEW"
+  },
+  {
+    "bank_id": "B048",
+    "expected_status": "REVIEW"
+  },
+  {
+    "bank_id": "B049",
+    "expected_status": "REVIEW"
+  },
+  {
+    "bank_id": "B050",
+    "expected_status": "UNALLOCATED"
+  },
+  {
+    "bank_id": "B051",
+    "expected_status": "UNALLOCATED"
+  },
+  {
+    "bank_id": "B052",
+    "expected_status": "MATCHED"
+  },
+  {
+    "bank_id": "B053",
+    "expected_status": "REVIEW"
+  }
+]

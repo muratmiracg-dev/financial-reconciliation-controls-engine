@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local financial data and generated private reports
+output/
+uploads/
+.env
+.env.*
+!.env.example
+private-data/
+*.log

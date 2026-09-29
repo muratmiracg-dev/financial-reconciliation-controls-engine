@@ -1,0 +1,8 @@
+[project]
+name = "financial-reconciliation-controls-engine"
+version = "1.0.0"
+description = "Explainable local three-way cash reconciliation"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Murat Miraç Gedik"}]
+dependencies = []
