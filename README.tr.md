@@ -44,3 +44,60 @@ ise girdi kimliklerini içerir; gerçek finansal dosyaları GitHub'a eklemeyin.
 Bu sürüm muhasebe kaydı oluşturmaz, ödeme yapmaz ve onay kararı vermez.
 
 [Veri sözleşmesi](docs/DATA_CONTRACT.md) · [Yöntem](docs/METHODOLOGY.md) · [English](README.md)
+
+## Eşleştirme nasıl çalışır?
+1. Dosya başlıkları, kayıt kimlikleri, tarih ve tutarlar doğrulanır.
+2. Aynı iş alanlarına sahip mükerrer kayıt adayları ayrılır.
+3. Her muhasebe fişinin borç/alacak dengesi para birimi bazında kontrol edilir.
+4. BANK satırlarının net tutarı ilgili banka hareketiyle karşılaştırılır.
+5. Fatura referanslarıyla bağlı ödeme grupları kurulur; bölünmüş ve toplu ödemeler birlikte ele alınır.
+6. Referans, taraf, tarih, para birimi ve muhasebe kontrolleri geçen gruplar MATCHED olur.
+7. Belirsiz, eksik veya fark içeren gruplar incelemeye bırakılır.
+
+| Örnek kayıt | Senaryo | Beklenen sonuç |
+|---|---|---|
+| B041 / B042 | Bir faturanın iki ödemeyle kapatılması | MATCHED |
+| B043 | İki faturanın tek ödemeyle kapatılması | MATCHED |
+| B044 | Komisyon kesintisi | REVIEW; farkın açıklaması gösterilir |
+| B045 | Kısmi ödeme | REVIEW |
+| B046 / B047 | Mükerrer işlem şüphesi | İki kayıt da incelemeye ayrılır |
+| B048 | Muhasebe kaydı eksik | REVIEW |
+| B049 | Referanssız tekil aday | REVIEW; kesin eşleşme sayılmaz |
+| B050 | Birden fazla aday fatura | Atama yapılmaz |
+
+## Veri hazırlığı ve toleranslar
+CSV başlıkları örnek dosyalarla aynı olmalıdır. Tarihler YYYY-MM-DD, tutarlar noktalı
+ondalık biçimde yazılır. Fatura tutarı dönem başı açık bakiyedir. Pozitif değerler
+alacak/tahsilatı, negatif değerler borç/ödemeyi gösterir. Taraf kimlikleri eşit olmalıdır.
+
+Varsayılan tarih penceresi 45 gün, tutar toleransı 1 kuruş/cent'tir. Muhasebe BANK
+satırı karşılaştırması tam eşitlik arar. TRY, USD, EUR ve GBP ayrı değerlendirilir;
+kur dönüşümü veya para birimleri arasında mahsuplaşma yapılmaz.
+
+## Rapor ve kanıt
+JSON; çalışma kimliğini, girdi SHA-256 özetlerini, politikayı, grupları, istisnaları
+ve para birimi toplamlarını içerir. CSV yalnızca mutabakat gruplarını içerir.
+İstisnalar çakışabilir; adetlerini inceleme gruplarıyla toplamak doğru değildir.
+Dosya özeti anonimleştirme veya değiştirilemez denetim kaydı anlamına gelmez.
+
+## Komut satırı
+```bash
+python -m reconcile --demo --output output
+python -m reconcile --input data/demo --output output --days 45 --tolerance 1
+python -m unittest discover -s tests -v
+```
+
+## Güvenlik ve bakım
+İş akışları sabit commit kimliklerine bağlanmıştır. CI yalnızca okuma yetkisiyle
+çalışır; CodeQL işlerinin tarama sonucu yükleme yetkisi vardır. Checkout kimlik
+bilgilerini kalıcı tutmaz. Python ve JavaScript ayrı CodeQL işlerinde taranır.
+CODEOWNERS dosyası kod sahibini belirtir; zorunlu onay için GitHub kural ayarları gerekir.
+
+Secret scanning, push protection ve dal koruması depo ayarlarıdır; dosyalardaki
+korumalar bunların açık olduğunu tek başına kanıtlamaz. [Güvenlik politikası](SECURITY.md).
+
+## Sınırlar
+30 otomatik test ve tekrarlanabilir sentetik sonuç kontrolü bulunur. Gerçek veride
+başarı oranı ölçülmemiştir. Tarayıcı görsel testi ilk geliştirme ortamında Chromium
+indirme sorunu nedeniyle tamamlanamamıştır. Kalıcı inceleme/onay kaydı, ERP bağlantısı,
+kur dönüşümü ve bankaya özel dosya dönüştürücüleri bu sürümde yoktur.
