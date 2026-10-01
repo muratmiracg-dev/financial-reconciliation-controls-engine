@@ -40,8 +40,10 @@ within a referenced component must be within the window. This conservative rule
 may flag long-running installments. BANK ledger lines also use this window.
 
 A FEE debit explaining an inflow shortfall adds a reason code, but never silently
-clears the difference. Fee detection is illustrative and does not classify every
-possible outgoing-payment fee arrangement.
+clears the difference. Fee evidence is accepted only from a balanced, non-duplicate
+entry that also contains the linked BANK line and passes the bank-ledger control.
+Detached or invalid fee rows cannot explain a difference. Fee detection is
+illustrative and does not classify every possible outgoing-payment fee arrangement.
 
 ## Rule strength, not probability
 Reference groups receive evidence strength 100 for explicit linkage, even if other
