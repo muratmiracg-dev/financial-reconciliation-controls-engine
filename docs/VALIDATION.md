@@ -3,8 +3,8 @@
 ## Automated checks
 `python -m unittest discover -s tests -v`
 
-30 tests cover controlled fixture statuses, record non-reuse, deterministic results,
-split and batch settlements, fee review, multi-currency isolation, party/date
+31 tests cover controlled fixture statuses, record non-reuse, deterministic results,
+split and batch settlements, valid and detached fee evidence, multi-currency isolation, party/date
 conflicts, exact cents, invalid amounts/dates/schemas/IDs, unbalanced ledger,
 reference-free suggestions, ambiguity, unknown references, policy limits, formula
 escaping, empty extracts, tolerance, outgoing payments, HTTP requests and
