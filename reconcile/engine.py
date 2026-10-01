@@ -224,7 +224,17 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
         delta = cash - gross if len(currencies) == 1 else None
         if delta is not None and abs(delta) > tolerance:
             flags.append("AMOUNT_DIFFERENCE")
-        # Fees are a hypothesis requiring review, even when a FEE posting exists.
+        # Fees are a hypothesis requiring review. Only use evidence from a valid
+        # entry that also contains the linked BANK line; detached or unbalanced
+        # fee rows must not explain a settlement difference.
+        bank_entry_links = {
+            (r["entry_id"], r["bank_id"])
+            for r in journal
+            if r["account"] == "BANK"
+            and r["bank_id"] in {b["id"] for b in bs}
+            and r["entry_id"] not in bad_entries
+            and ("journal", r["id"]) not in duplicate
+        }
         fee = sum(
             r["debit"] - r["credit"]
             for r in journal
@@ -232,6 +242,10 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
             and r["bank_id"] in {b["id"] for b in bs}
             and len(currencies) == 1
             and r["currency"] in currencies
+            and r["entry_id"] not in bad_entries
+            and ("journal", r["id"]) not in duplicate
+            and (r["entry_id"], r["bank_id"]) in bank_entry_links
+            and ledger_ok[r["bank_id"]]
         )
         if delta is not None and delta < 0 and fee == -delta:
             flags.append("FEE_EXPLAINS_DIFFERENCE")

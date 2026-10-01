@@ -16,6 +16,17 @@ def edit(text, **changes):
     return out.getvalue()
 
 
+def edit_record(text, record_id, **changes):
+    rows = list(csv.DictReader(io.StringIO(text)))
+    row = next(row for row in rows if row["id"] == record_id)
+    row.update(changes)
+    out = io.StringIO()
+    w = csv.DictWriter(out, fieldnames=rows[0])
+    w.writeheader()
+    w.writerows(rows)
+    return out.getvalue()
+
+
 class EngineTests(unittest.TestCase):
     def setUp(self):
         self.d, self.truth = demo()
@@ -51,6 +62,14 @@ class EngineTests(unittest.TestCase):
         g = next(g for g in self.run_engine()["groups"] if "B044" in g["bank_ids"])
         self.assertIn("FEE_EXPLAINS_DIFFERENCE", g["flags"])
         self.assertEqual(g["status"], "REVIEW")
+
+    def test_detached_fee_never_explains_difference(self):
+        self.d["journal"] = edit_record(
+            self.d["journal"], "B044C", entry_id="DETACHED"
+        )
+        g = next(g for g in self.run_engine()["groups"] if "B044" in g["bank_ids"])
+        self.assertNotIn("FEE_EXPLAINS_DIFFERENCE", g["flags"])
+        self.assertIn("LEDGER_MISMATCH", g["flags"])
 
     def test_currency_never_net(self):
         self.d["bank"] = edit(self.d["bank"], currency="EUR")
