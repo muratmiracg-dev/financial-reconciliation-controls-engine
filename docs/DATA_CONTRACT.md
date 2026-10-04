@@ -30,3 +30,9 @@ A 10,000 receivable collected net of a 25 fee:
 Result: `REVIEW`, amount difference -2500 minor units, fee explanation present.
 Download the three example files from the app, or use `data/demo/`.
 The benchmark truth file is for validation only and is never passed to the engine.
+# Journal posting-date invariant
+
+Every line belonging to the same journal `entry_id` must have one identical
+ISO posting date. A cross-date entry is reported as `ENTRY_DATE_CONFLICT`,
+quarantined from reconciliation, and cannot support an automatic match even
+when its debits and credits balance.
