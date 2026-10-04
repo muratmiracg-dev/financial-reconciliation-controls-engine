@@ -146,6 +146,14 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
             balances[r["currency"]] += r["debit"] - r["credit"]
         if any(("journal", r["id"]) in duplicate for r in lines):
             bad_entries.add(eid)
+        if len({r["date"] for r in lines}) != 1:
+            bad_entries.add(eid)
+            issue(
+                "ENTRY_DATE_CONFLICT",
+                "journal",
+                [r["id"] for r in lines],
+                f"Entry {eid}: lines use different posting dates",
+            )
         if any(balances.values()):
             bad_entries.add(eid)
             issue(

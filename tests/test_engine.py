@@ -111,6 +111,23 @@ class EngineTests(unittest.TestCase):
         self.assertIn("UNBALANCED_ENTRY", [i["code"] for i in r["issues"]])
         self.assertEqual(r["groups"][0]["status"], "REVIEW")
 
+    def test_cross_date_journal_entry_blocks_match(self):
+        rows = list(csv.DictReader(io.StringIO(self.d["journal"])))
+        entry_id = rows[0]["entry_id"]
+        linked = [row for row in rows if row["entry_id"] == entry_id]
+        self.assertGreaterEqual(len(linked), 2)
+        self.d["journal"] = edit_record(
+            self.d["journal"], linked[-1]["id"], date="2026-08-31"
+        )
+        result = self.run_engine()
+        conflict = next(
+            issue for issue in result["issues"] if issue["code"] == "ENTRY_DATE_CONFLICT"
+        )
+        self.assertEqual(set(conflict["ids"]), {row["id"] for row in linked})
+        group = next(group for group in result["groups"] if rows[0]["bank_id"] in group["bank_ids"])
+        self.assertEqual(group["status"], "REVIEW")
+        self.assertIn("LEDGER_MISMATCH", group["flags"])
+
     def test_missing_reference_review_only(self):
         g = next(g for g in self.run_engine()["groups"] if "B049" in g["bank_ids"])
         self.assertEqual(g["status"], "REVIEW")
