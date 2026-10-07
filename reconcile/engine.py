@@ -74,10 +74,10 @@ def parse_csv(text, kind):
             for key in ("debit", "credit"):
                 row[key] = money(row[key])
             if min(row["debit"], row["credit"]) < 0 or (
-                row["debit"] > 0 and row["credit"] > 0
+                (row["debit"] > 0) == (row["credit"] > 0)
             ):
                 raise ValueError(
-                    "Journal lines require nonnegative one-sided debit/credit"
+                    "Journal lines require exactly one positive debit or credit"
                 )
         else:
             row["amount"] = money(row["amount"])

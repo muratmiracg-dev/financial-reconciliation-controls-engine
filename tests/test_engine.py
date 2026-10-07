@@ -93,6 +93,11 @@ class EngineTests(unittest.TestCase):
     def test_cents_exact(self):
         self.assertEqual(money("0.29"), 29)
 
+    def test_zero_value_journal_line_rejected(self):
+        journal = edit_record(self.d["journal"], "B001A", debit="0", credit="0")
+        with self.assertRaisesRegex(ValueError, "exactly one positive"):
+            parse_csv(journal, "journal")
+
     def test_invalid_date(self):
         with self.assertRaises(ValueError):
             parse_csv(edit(self.d["bank"], date="2026-02-30"), "bank")
