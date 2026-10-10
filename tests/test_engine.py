@@ -1,8 +1,9 @@
 import csv
 import io
 import unittest
+
 from reconcile.demo import demo
-from reconcile.engine import reconcile, parse_csv, money, export_csv
+from reconcile.engine import MAX_CSV_BYTES, export_csv, money, parse_csv, reconcile
 
 
 def edit(text, **changes):
@@ -109,6 +110,14 @@ class EngineTests(unittest.TestCase):
     def test_bad_schema(self):
         with self.assertRaises(ValueError):
             parse_csv("id,date\na,b", "bank")
+
+    def test_csv_inputs_have_type_and_size_limits(self):
+        with self.assertRaisesRegex(TypeError, "UTF-8 text"):
+            parse_csv(b"id,date", "bank")
+        with self.assertRaisesRegex(ValueError, "exceeds"):
+            parse_csv("x" * (MAX_CSV_BYTES + 1), "bank")
+        with self.assertRaisesRegex(ValueError, "Unknown"):
+            parse_csv("id\n1", "unknown")
 
     def test_unbalanced_ledger_blocks_match(self):
         self.d["journal"] = edit(self.d["journal"], debit="1124")
