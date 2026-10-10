@@ -10,6 +10,7 @@ from decimal import Decimal, InvalidOperation
 from difflib import SequenceMatcher
 
 VERSION = "1.0.0"
+MAX_CSV_BYTES = 5_000_000
 SCHEMAS = {
     "bank": ("id", "date", "party", "currency", "amount", "reference", "description"),
     "invoices": ("id", "date", "party", "currency", "amount", "description"),
@@ -43,6 +44,12 @@ def money(value):
 
 
 def parse_csv(text, kind):
+    if kind not in SCHEMAS:
+        raise ValueError("Unknown reconciliation input type")
+    if not isinstance(text, str):
+        raise TypeError(f"{kind}: CSV input must be UTF-8 text")
+    if len(text.encode("utf-8")) > MAX_CSV_BYTES:
+        raise ValueError(f"{kind}: CSV input exceeds {MAX_CSV_BYTES} bytes")
     reader = csv.DictReader(io.StringIO(text.lstrip("\ufeff")))
     if (
         not reader.fieldnames
