@@ -146,6 +146,29 @@ class EngineTests(unittest.TestCase):
         g = next(g for g in self.run_engine()["groups"] if "B049" in g["bank_ids"])
         self.assertEqual(g["status"], "REVIEW")
 
+    def test_mixed_bank_links_quarantine_entire_journal_entry(self):
+        rows = list(csv.DictReader(io.StringIO(self.d["journal"])))
+        entry_id = rows[0]["entry_id"]
+        linked = [row for row in rows if row["entry_id"] == entry_id]
+        other_bank = next(
+            row["id"]
+            for row in csv.DictReader(io.StringIO(self.d["bank"]))
+            if row["id"] != rows[0]["bank_id"]
+        )
+        self.d["journal"] = edit_record(
+            self.d["journal"], linked[-1]["id"], bank_id=other_bank
+        )
+        result = self.run_engine()
+        conflict = next(
+            issue for issue in result["issues"] if issue["code"] == "ENTRY_BANK_CONFLICT"
+        )
+        self.assertEqual(set(conflict["ids"]), {row["id"] for row in linked})
+        group = next(
+            group for group in result["groups"] if rows[0]["bank_id"] in group["bank_ids"]
+        )
+        self.assertEqual(group["status"], "REVIEW")
+        self.assertIn("LEDGER_MISMATCH", group["flags"])
+
     def test_ambiguity_not_allocated(self):
         self.assertNotIn(
             "B050", [b for g in self.run_engine()["groups"] for b in g["bank_ids"]]
