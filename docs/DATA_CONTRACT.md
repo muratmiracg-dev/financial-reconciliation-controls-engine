@@ -20,6 +20,9 @@ to bank id (can be empty for unrelated lines). `account=BANK` identifies the cas
 side; `FEE` identifies fee expense; other role names are accepted. Debit and credit
 must be nonnegative and not both positive on one line. A journal entry must balance
 within each currency. All linked BANK lines together must equal the movement.
+Every line in one journal entry may reference at most one non-empty `bank_id`.
+Entries that mix bank links are reported as `ENTRY_BANK_CONFLICT` and quarantined
+as a whole so one posting cannot substantiate multiple cash records.
 
 ## Example
 A 10,000 receivable collected net of a 25 fee:
