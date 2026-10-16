@@ -4,6 +4,7 @@ import csv
 import hashlib
 import io
 import json
+import unicodedata
 from collections import Counter, defaultdict
 from datetime import date
 from decimal import Decimal, InvalidOperation
@@ -64,6 +65,11 @@ def parse_csv(text, kind):
         if None in raw or any(v is None for v in raw.values()):
             raise ValueError(f"{kind} line {line}: malformed row")
         row = {k: v.strip() for k, v in raw.items()}
+        if any(
+            any(unicodedata.category(char) == "Cc" for char in value)
+            for value in row.values()
+        ):
+            raise ValueError(f"{kind} line {line}: control characters are not allowed")
         if any(len(v) > 500 for v in row.values()):
             raise ValueError(f"{kind} line {line}: field too long")
         if not row["id"] or row["id"] in seen:
