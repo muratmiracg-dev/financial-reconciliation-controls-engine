@@ -111,6 +111,13 @@ class EngineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_csv("id,date\na,b", "bank")
 
+    def test_control_characters_are_rejected(self):
+        for value in ("ACME\x00Corp", "ACME\x1fCorp"):
+            with self.subTest(value=repr(value)), self.assertRaisesRegex(
+                ValueError, "control characters"
+            ):
+                parse_csv(edit(self.d["bank"], party=value), "bank")
+
     def test_csv_inputs_have_type_and_size_limits(self):
         with self.assertRaisesRegex(TypeError, "UTF-8 text"):
             parse_csv(b"id,date", "bank")
