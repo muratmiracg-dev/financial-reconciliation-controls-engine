@@ -112,9 +112,9 @@ class EngineTests(unittest.TestCase):
             parse_csv("id,date\na,b", "bank")
 
     def test_control_characters_are_rejected(self):
-        for value in ("ACME\x00Corp", "ACME\x1fCorp"):
+        for value in ("ACME\x00Corp", "ACME\x1fCorp", "ACME\u200bCorp", "ACME\u202eCorp"):
             with self.subTest(value=repr(value)), self.assertRaisesRegex(
-                ValueError, "control characters"
+                ValueError, "control or formatting characters"
             ):
                 parse_csv(edit(self.d["bank"], party=value), "bank")
 

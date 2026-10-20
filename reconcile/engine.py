@@ -66,10 +66,10 @@ def parse_csv(text, kind):
             raise ValueError(f"{kind} line {line}: malformed row")
         row = {k: v.strip() for k, v in raw.items()}
         if any(
-            any(unicodedata.category(char) == "Cc" for char in value)
+            any(unicodedata.category(char) in {"Cc", "Cf"} for char in value)
             for value in row.values()
         ):
-            raise ValueError(f"{kind} line {line}: control characters are not allowed")
+            raise ValueError(f"{kind} line {line}: control or formatting characters are not allowed")
         if any(len(v) > 500 for v in row.values()):
             raise ValueError(f"{kind} line {line}: field too long")
         if not row["id"] or row["id"] in seen:

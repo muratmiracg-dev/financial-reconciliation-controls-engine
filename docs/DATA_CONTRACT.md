@@ -1,7 +1,8 @@
 # Input contract
 
-Text fields must not contain Unicode control characters. Inputs containing NUL or other
-control bytes fail closed before matching to prevent ambiguous CSV parsing and unsafe exports.
+Text fields must not contain Unicode control or invisible formatting characters. Inputs containing
+NUL, zero-width marks or bidirectional overrides fail closed before matching to prevent ambiguous
+identifiers, CSV parsing and unsafe exports.
 UTF-8 comma-separated CSV, header required. Column order may vary; no extra columns.
 Quoted descriptions may contain commas. IDs are case-sensitive. Party values must
 be normalized upstream; exact equality is intentional. Dates: YYYY-MM-DD.
