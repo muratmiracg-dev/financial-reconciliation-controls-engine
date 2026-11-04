@@ -191,6 +191,15 @@ $("json").onclick = () =>
     JSON.stringify(result, null, 2),
     "application/json",
   );
+// Quote one CSV cell and neutralise spreadsheet formulas. The guard runs on the final text,
+// so joined id lists (bank_ids, invoice_ids, flags) are covered, not only plain strings.
+// Numbers are written as-is so negative amounts stay numeric.
+function csvCell(v) {
+  let s = Array.isArray(v) ? v.join(";") : v === null || v === undefined ? "" : String(v);
+  if (typeof v !== "number" && /^\s*[=+@-]/.test(s)) s = "'" + s;
+  return '"' + s.replaceAll('"', '""') + '"';
+}
+
 $("csv").onclick = () => {
   const cols = [
     "id",
@@ -207,16 +216,11 @@ $("csv").onclick = () => {
     "invoice_ids",
     "flags",
   ];
-  const escape = (v) => {
-    let s = Array.isArray(v) ? v.join(";") : v === null ? "" : String(v);
-    if (typeof v === "string" && /^[\s]*[=+@-]/.test(s)) s = "'" + s;
-    return '"' + s.replaceAll('"', '""') + '"';
-  };
   download(
     "settlements-minor-units.csv",
     [
       cols.join(","),
-      ...result.groups.map((g) => cols.map((k) => escape(g[k])).join(",")),
+      ...result.groups.map((g) => cols.map((k) => csvCell(g[k])).join(",")),
     ].join("\r\n"),
     "text/csv",
   );
