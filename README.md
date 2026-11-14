@@ -51,6 +51,7 @@ rows. All parties, records and results are synthetic.
 | Review settlement groups | 6 |
 | Control exception records | 8 |
 | Bank-level fixture status agreement | 53 / 53 |
+| Bank-level fixture invoice-allocation agreement | 53 / 53 |
 
 Groups and exception records are different units and may overlap. Fixture agreement
 is a controlled regression result, **not real-world model accuracy**. There is no

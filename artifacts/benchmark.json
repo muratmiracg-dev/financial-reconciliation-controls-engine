@@ -1,5 +1,8 @@
 {
   "records": 53,
+  "status_correct": 53,
+  "allocation_correct": 53,
   "correct": 53,
-  "note": "Controlled fixture agreement; not real-world accuracy"
+  "mismatches": [],
+  "note": "Controlled fixture agreement on status and invoice allocation; not real-world accuracy"
 }

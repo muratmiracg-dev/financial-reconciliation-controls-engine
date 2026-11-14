@@ -3,20 +3,25 @@
 ## Automated checks
 `python -m unittest discover -s tests -v`
 
-31 tests cover controlled fixture statuses, record non-reuse, deterministic results,
+52 tests cover controlled fixture statuses and invoice allocations, record non-reuse, deterministic results,
 split and batch settlements, valid and detached fee evidence, multi-currency isolation, party/date
 conflicts, exact cents, invalid amounts/dates/schemas/IDs, unbalanced ledger,
 reference-free suggestions, ambiguity, unknown references, policy limits, formula
 escaping, empty extracts, tolerance, outgoing payments, HTTP requests and
 cross-origin/host rejection.
 
-The committed `artifacts/report.json` is regenerated in CI and compared byte for
-byte. The engine has no third-party Python runtime dependencies.
+The committed `artifacts/report.json` and `artifacts/benchmark.json` are regenerated
+in CI and compared byte for byte. The engine has no third-party Python runtime dependencies.
 
 ## Benchmark design
-53 bank movements, 53 invoices, 105 journal lines. The demo generator emits expected
-bank-level statuses independently of the matching output. Truth labels are not
-passed to the matcher. 53/53 expected statuses agree with the deterministic run.
+53 bank movements, 53 invoices, 105 journal lines. The demo generator emits, for
+every bank movement, the expected status and the exact invoice set it settles,
+independently of the matching output. Truth labels are not passed to the matcher.
+`artifacts/benchmark.json` scores both: a movement counts as correct only when its
+status matches and it is grouped with exactly the expected invoices, so a payment
+allocated to the wrong invoice no longer passes on status alone. 53/53 statuses and
+53/53 allocations agree with the deterministic run, and CI regenerates and compares
+the benchmark file byte for byte.
 This measures regression consistency on an authored fixture; it is not a held-out
 real-world performance estimate. Match precision/recall on real operational data
 has not been measured. External validation is required before operational use.

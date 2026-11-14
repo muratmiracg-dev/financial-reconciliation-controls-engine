@@ -1,7 +1,7 @@
 import argparse
 import json
 from pathlib import Path
-from .demo import demo
+from .demo import demo, score_benchmark
 from .engine import reconcile, export_csv
 
 
@@ -48,22 +48,8 @@ def main(argv=None):
     )
     (args.output / "settlements.csv").write_text(export_csv(result), encoding="utf-8")
     if truth:
-        predicted = {
-            bid: g["status"] for g in result["groups"] for bid in g["bank_ids"]
-        }
-        correct = sum(
-            predicted.get(t["bank_id"], "UNALLOCATED") == t["expected_status"]
-            for t in truth
-        )
         (args.output / "benchmark.json").write_text(
-            json.dumps(
-                dict(
-                    records=len(truth),
-                    correct=correct,
-                    note="Controlled fixture agreement; not real-world accuracy",
-                ),
-                indent=2,
-            )
+            json.dumps(score_benchmark(result, truth), indent=2)
         )
     print(
         json.dumps(

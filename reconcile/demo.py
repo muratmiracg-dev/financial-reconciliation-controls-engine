@@ -10,6 +10,7 @@ def demo():
     invoices = []
     journal = []
     truth = []
+    intended = {}
 
     def inv(i, amount, party=None, description="Consulting services"):
         invoices.append(
@@ -26,6 +27,9 @@ def demo():
     def pay(
         b, amount, refs, party, ledger=True, fee=0, description="Consulting services"
     ):
+        # The invoices a payment settles, recorded for scoring only (never passed to
+        # the matcher). Unreferenced payments get their intended invoice set below.
+        intended[b] = sorted(x for x in refs.split(";") if x)
         bank.append(
             dict(
                 id=b,
@@ -86,13 +90,22 @@ def demo():
     pay("B052", -2100, "OUTFLOW", "OUTFLOW")
     inv("OVERPAY", 2000)
     pay("B053", 2200, "OVERPAY", "OVERPAY")
+    # B049 has no reference but a unique amount/date/party candidate, which is the
+    # invoice it pays. B050 is ambiguous and B051 has no candidate: no allocation.
+    intended["B049"] = ["UNREFERENCED"]
     for row in bank:
         status = (
             "MATCHED"
             if int(row["id"][1:]) <= 43 or row["id"] == "B052"
             else ("UNALLOCATED" if row["id"] in ("B050", "B051") else "REVIEW")
         )
-        truth.append(dict(bank_id=row["id"], expected_status=status))
+        truth.append(
+            dict(
+                bank_id=row["id"],
+                expected_status=status,
+                expected_invoice_ids=intended[row["id"]] if status != "UNALLOCATED" else [],
+            )
+        )
     result = {}
     for kind, rows in zip(SCHEMAS, (bank, invoices, journal)):
         out = io.StringIO()
@@ -101,3 +114,44 @@ def demo():
         w.writerows(rows)
         result[kind] = out.getvalue()
     return result, truth
+
+
+def score_benchmark(result, truth):
+    """Compare engine output with fixture truth on status AND invoice allocation.
+
+    A bank record counts as correct only when its status matches and it is grouped
+    with exactly the expected invoices, so a payment allocated to the wrong invoice
+    can no longer pass as a correct MATCHED or REVIEW result.
+    """
+
+    by_bank = {bid: g for g in result["groups"] for bid in g["bank_ids"]}
+    status_ok = allocation_ok = correct = 0
+    mismatches = []
+    for t in truth:
+        group = by_bank.get(t["bank_id"])
+        status = group["status"] if group else "UNALLOCATED"
+        invoice_ids = sorted(group["invoice_ids"]) if group else []
+        s_ok = status == t["expected_status"]
+        a_ok = invoice_ids == sorted(t["expected_invoice_ids"])
+        status_ok += s_ok
+        allocation_ok += a_ok
+        correct += s_ok and a_ok
+        if not (s_ok and a_ok):
+            mismatches.append(
+                dict(
+                    bank_id=t["bank_id"],
+                    expected_status=t["expected_status"],
+                    status=status,
+                    expected_invoice_ids=sorted(t["expected_invoice_ids"]),
+                    invoice_ids=invoice_ids,
+                )
+            )
+    return dict(
+        records=len(truth),
+        status_correct=status_ok,
+        allocation_correct=allocation_ok,
+        correct=correct,
+        mismatches=mismatches,
+        note="Controlled fixture agreement on status and invoice allocation; "
+        "not real-world accuracy",
+    )
