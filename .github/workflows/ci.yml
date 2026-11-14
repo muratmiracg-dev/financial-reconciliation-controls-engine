@@ -19,4 +19,5 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python -m reconcile --demo --output /tmp/reconcile-evidence
       - run: diff artifacts/report.json /tmp/reconcile-evidence/report.json
+      - run: diff artifacts/benchmark.json /tmp/reconcile-evidence/benchmark.json
       - run: node --check web/app.js

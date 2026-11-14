@@ -1,8 +1,10 @@
 import csv
 import io
+import json
 import unittest
+from pathlib import Path
 
-from reconcile.demo import demo
+from reconcile.demo import demo, score_benchmark
 from reconcile.engine import MAX_CSV_BYTES, export_csv, money, parse_csv, reconcile
 
 
@@ -42,6 +44,37 @@ class EngineTests(unittest.TestCase):
             self.assertEqual(
                 actual.get(t["bank_id"], "UNALLOCATED"), t["expected_status"], t
             )
+
+    def test_fixture_allocation_matches_truth(self):
+        score = score_benchmark(self.run_engine(), self.truth)
+        self.assertEqual(score["mismatches"], [])
+        self.assertEqual(score["correct"], score["records"])
+
+    def test_benchmark_rejects_correct_status_with_wrong_invoice(self):
+        r = self.run_engine()
+        group = next(g for g in r["groups"] if g["bank_ids"] == ["B001"])
+        self.assertEqual(group["status"], "MATCHED")
+        group["invoice_ids"] = ["INV-002"]  # status unchanged, allocation wrong
+        score = score_benchmark(r, self.truth)
+        self.assertEqual(score["status_correct"], score["records"])
+        self.assertEqual(score["allocation_correct"], score["records"] - 1)
+        self.assertEqual(score["correct"], score["records"] - 1)
+        self.assertEqual(score["mismatches"][0]["bank_id"], "B001")
+        self.assertEqual(score["mismatches"][0]["invoice_ids"], ["INV-002"])
+
+    def test_benchmark_rejects_missing_allocation(self):
+        r = self.run_engine()
+        r["groups"] = [g for g in r["groups"] if g["bank_ids"] != ["B043"]]
+        score = score_benchmark(r, self.truth)
+        [miss] = score["mismatches"]
+        self.assertEqual(miss["status"], "UNALLOCATED")
+        self.assertEqual(miss["expected_invoice_ids"], ["BATCH-A", "BATCH-B"])
+
+    def test_committed_truth_file_matches_fixture(self):
+        committed = json.loads(
+            (Path(__file__).resolve().parents[1] / "data/demo/truth.json").read_text()
+        )
+        self.assertEqual(committed, self.truth)
 
     def test_no_record_reuse(self):
         r = self.run_engine()
