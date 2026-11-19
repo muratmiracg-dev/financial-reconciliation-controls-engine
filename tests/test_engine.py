@@ -1,6 +1,7 @@
 import csv
 import io
 import json
+import time
 import unittest
 from pathlib import Path
 
@@ -243,6 +244,46 @@ class EngineTests(unittest.TestCase):
         g = next(g for g in self.run_engine()["groups"] if "B052" in g["bank_ids"])
         self.assertEqual(g["status"], "MATCHED")
         self.assertLess(g["bank_amount"], 0)
+
+
+def scale_inputs(n, chain=False):
+    """n bank receipts, invoices and balanced journal entries (2 lines each)."""
+    bank = ["id,date,party,currency,amount,reference,description"]
+    invoices = ["id,date,party,currency,amount,description"]
+    journal = ["id,entry_id,date,bank_id,account,currency,debit,credit"]
+    for k in range(n):
+        amount = 100 + k % 900
+        refs = f"I{k:05}" + (f";I{k + 1:05}" if chain and k + 1 < n else "")
+        bank.append(f"B{k:05},2026-09-05,P{k % 50},TRY,{amount},{refs},Receipt {k}")
+        invoices.append(f"I{k:05},2026-09-01,P{k % 50},TRY,{amount},Invoice {k}")
+        if 2 * k + 1 < n:
+            journal.append(f"J{k:05}A,E{k:05},2026-09-05,B{k:05},BANK,TRY,{amount},0")
+            journal.append(f"J{k:05}B,E{k:05},2026-09-05,,AR,TRY,0,{amount}")
+    return ["\n".join(rows) + "\n" for rows in (bank, invoices, journal)]
+
+
+class ScaleTest(unittest.TestCase):
+    """The documented 10,000-row limit must be usable, not a 45-second request."""
+
+    def test_max_rows_finish_quickly(self):
+        bank, invoices, journal = scale_inputs(10_000)
+        started = time.perf_counter()
+        result = reconcile(bank, invoices, journal)
+        elapsed = time.perf_counter() - started
+        self.assertEqual(len(result["groups"]), 10_000)
+        self.assertEqual(result["summary"]["matched"], 5_000)
+        # Linear indexing runs this in about half a second; the previous
+        # full-journal scans per bank record took ~45 s on the same machine.
+        self.assertLess(elapsed, 10, f"10,000-row reconciliation took {elapsed:.1f}s")
+
+    def test_long_reference_chain_is_one_settlement_group(self):
+        # B0 -> I0,I1; B1 -> I1,I2; ... every receipt is connected to the next.
+        bank, invoices, journal = scale_inputs(3_000, chain=True)
+        result = reconcile(bank, invoices, journal)
+        self.assertEqual(len(result["groups"]), 1)
+        group = result["groups"][0]
+        self.assertEqual(group["shape"], "3000:3000")
+        self.assertEqual(group["bank_ids"], sorted(group["bank_ids"]))
 
 
 if __name__ == "__main__":

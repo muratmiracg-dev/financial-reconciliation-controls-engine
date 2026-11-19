@@ -150,7 +150,9 @@ entry_id groups the balanced posting. BANK and FEE are normalized account roles.
 Supported currencies are TRY, USD, EUR and GBP. There is no cross-currency netting.
 Up to 10,000 rows per input and 500 characters per field are accepted. The browser
 limits each file to 2 MB; the server limits the total request to 8 MB. This is a
-small-extract workbench; matching unreferenced candidates can be quadratic.
+small-extract workbench. Journal lines and open invoices are indexed, so a full
+10,000-row run takes about a second; unreferenced candidate search is quadratic only
+within one currency-and-party bucket.
 
 ### Policy controls
 - **Date window:** absolute calendar-day distance; 45 days by default, 0–365 allowed.

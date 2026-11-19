@@ -59,7 +59,8 @@ log. No approval state is persisted. JSON contains user-supplied identifiers.
 
 ## Limits
 10,000 rows per input, 500 characters per field; browser uploads 2 MB per file,
-API total 8 MB. This is a local reference application for small extracts; candidate
-matching can be quadratic. Duplicate detection flags identical business fields,
+API total 8 MB. This is a local reference application for small extracts. Journal
+lines are indexed by bank id and open invoices by (currency, party), so candidate
+matching is quadratic only within one bucket; a 10,000-row run takes about a second. Duplicate detection flags identical business fields,
 not all semantic duplicates or fraud. A balanced entry can still be misclassified.
 BANK/AR/FEE are normalized account roles, not a national chart of accounts.

@@ -188,11 +188,15 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
     for r in journal:
         if r["bank_id"] and r["bank_id"] not in bank_ids:
             issue("ORPHAN_BANK_LINK", "journal", [r["id"]], "Unknown bank_id")
+    # Index journal lines by bank record once. Scanning the whole journal for every
+    # bank record and every settlement group made a 10,000-row run take ~45 s.
+    journal_by_bank = defaultdict(list)
+    for r in journal:
+        if r["bank_id"]:
+            journal_by_bank[r["bank_id"]].append(r)
     ledger_ok = {}
     for b in banks:
-        lines = [
-            r for r in journal if r["bank_id"] == b["id"] and r["account"] == "BANK"
-        ]
+        lines = [r for r in journal_by_bank[b["id"]] if r["account"] == "BANK"]
         ok = (
             bool(lines)
             and all(
@@ -257,19 +261,18 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
         # Fees are a hypothesis requiring review. Only use evidence from a valid
         # entry that also contains the linked BANK line; detached or unbalanced
         # fee rows must not explain a settlement difference.
+        linked_lines = [r for b in bs for r in journal_by_bank[b["id"]]]
         bank_entry_links = {
             (r["entry_id"], r["bank_id"])
-            for r in journal
+            for r in linked_lines
             if r["account"] == "BANK"
-            and r["bank_id"] in {b["id"] for b in bs}
             and r["entry_id"] not in bad_entries
             and ("journal", r["id"]) not in duplicate
         }
         fee = sum(
             r["debit"] - r["credit"]
-            for r in journal
+            for r in linked_lines
             if r["account"] == "FEE"
-            and r["bank_id"] in {b["id"] for b in bs}
             and len(currencies) == 1
             and r["currency"] in currencies
             and r["entry_id"] not in bad_entries
@@ -302,18 +305,25 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
         used_b.update(b["id"] for b in bs)
         used_i.update(ids)
 
-    while remaining:
-        component_b = {min(remaining)}
-        component_i = set()
-        changed = True
-        while changed:
-            previous = (len(component_b), len(component_i))
-            for bid in sorted(component_b):
-                component_i.update(links[bid])
-            component_b.update(
-                bid for bid in remaining if set(links[bid]) & component_i
-            )
-            changed = previous != (len(component_b), len(component_i))
+    banks_by_invoice = defaultdict(set)
+    for bid, refs in links.items():
+        for ref in refs:
+            banks_by_invoice[ref].add(bid)
+    for start in sorted(remaining):
+        if start not in remaining:
+            continue
+        # Walk the bank <-> invoice reference graph from the lowest unvisited id.
+        component_b, component_i = {start}, set()
+        frontier = [start]
+        while frontier:
+            bid = frontier.pop()
+            for ref in links[bid]:
+                if ref in component_i:
+                    continue
+                component_i.add(ref)
+                for other in banks_by_invoice[ref] - component_b:
+                    component_b.add(other)
+                    frontier.append(other)
         remaining -= component_b
         emit(
             [bmap[i] for i in sorted(component_b)],
@@ -322,18 +332,18 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
             100,
         )
     # Non-reference suggestions require unique candidates on BOTH sides.
+    open_invoices = defaultdict(list)
+    for i in invoices:
+        if i["id"] not in used_i and ("invoices", i["id"]) not in duplicate:
+            open_invoices[(i["currency"], i["party"])].append(i)
     candidates = {}
     for b in banks:
         if b["id"] in used_b or ("bank", b["id"]) in duplicate:
             continue
         eligible = []
-        for i in invoices:
-            if i["id"] in used_i or ("invoices", i["id"]) in duplicate:
-                continue
+        for i in open_invoices[(b["currency"], b["party"])]:
             if (
-                b["currency"] == i["currency"]
-                and b["party"] == i["party"]
-                and abs(b["amount"] - i["amount"]) <= tolerance
+                abs(b["amount"] - i["amount"]) <= tolerance
                 and abs(
                     (date.fromisoformat(b["date"]) - date.fromisoformat(i["date"])).days
                 )
