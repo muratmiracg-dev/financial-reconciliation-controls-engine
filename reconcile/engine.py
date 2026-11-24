@@ -188,6 +188,15 @@ def reconcile(bank_csv, invoices_csv, journal_csv, days=45, tolerance=1):
     for r in journal:
         if r["bank_id"] and r["bank_id"] not in bank_ids:
             issue("ORPHAN_BANK_LINK", "journal", [r["id"]], "Unknown bank_id")
+        elif not r["bank_id"] and r["account"] == "BANK":
+            # A cash posting with no statement link was never compared with anything:
+            # a double-posted entry or a payment the bank never processed passed silently.
+            issue(
+                "UNLINKED_BANK_POSTING",
+                "journal",
+                [r["id"]],
+                f"Entry {r['entry_id']}: BANK line has no bank_id; not reconciled to the statement",
+            )
     # Index journal lines by bank record once. Scanning the whole journal for every
     # bank record and every settlement group made a 10,000-row run take ~45 s.
     journal_by_bank = defaultdict(list)

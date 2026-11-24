@@ -121,6 +121,7 @@ MIT licensed. See [SECURITY.md](SECURITY.md) for reporting and data-handling gui
 | Fee-supported shortfall | REVIEW with fee explanation | Confirm approved fee accounting |
 | Duplicate business fields | Quarantine all suspected copies | Identify the genuine source record |
 | Missing / unbalanced ledger | REVIEW even when invoice and bank agree | Correct or complete ledger evidence |
+| BANK journal line without `bank_id` | Emit `UNLINKED_BANK_POSTING` exception | Link it to the statement line, or confirm it as an outstanding item / reverse a double posting |
 | Unique unreferenced candidate | REVIEW with heuristic strength | Obtain a reliable invoice reference |
 | Multiple candidate matches | Leave unallocated; emit ambiguity exception | Resolve manually using external evidence |
 | Unknown explicit reference | REVIEW; no speculative fallback | Repair reference mapping |

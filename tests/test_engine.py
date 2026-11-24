@@ -51,6 +51,31 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(score["mismatches"], [])
         self.assertEqual(score["correct"], score["records"])
 
+    def test_bank_posting_without_statement_link_is_reported(self):
+        rows = list(csv.DictReader(io.StringIO(self.d["journal"])))
+        entry = next(r["entry_id"] for r in rows if r["account"] == "BANK" and r["bank_id"])
+        # The same cash receipt posted a second time under a new entry, without a bank link.
+        repost = [
+            dict(r, id=f"{r['id']}-RP", entry_id=f"{entry}-RP", bank_id="")
+            for r in rows
+            if r["entry_id"] == entry
+        ]
+        out = io.StringIO()
+        writer = csv.DictWriter(out, fieldnames=rows[0])
+        writer.writeheader()
+        writer.writerows(rows + repost)
+        self.d["journal"] = out.getvalue()
+
+        result = self.run_engine()
+        unlinked = [i for i in result["issues"] if i["code"] == "UNLINKED_BANK_POSTING"]
+        bank_line = next(r["id"] for r in repost if r["account"] == "BANK")
+        self.assertEqual([i["ids"] for i in unlinked], [[bank_line]])
+        self.assertIn(f"{entry}-RP", unlinked[0]["detail"])
+
+    def test_demo_has_no_unlinked_bank_postings(self):
+        codes = {i["code"] for i in self.run_engine()["issues"]}
+        self.assertNotIn("UNLINKED_BANK_POSTING", codes)
+
     def test_benchmark_rejects_correct_status_with_wrong_invoice(self):
         r = self.run_engine()
         group = next(g for g in r["groups"] if g["bank_ids"] == ["B001"])
